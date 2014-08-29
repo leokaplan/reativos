@@ -82,7 +82,7 @@ void loop () {
     
     int i;
     for(i=0;i<timers_count;i++){
-      timers[i] =+ dt;
+      timers[i] += dt;
     }
     /*
     button1_timer += dt;
