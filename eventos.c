@@ -5,30 +5,29 @@
 #ifndef MAX_PIN
 #define MAX_PIN 13
 #endif
-#ifndef OUTPUT
-#define OUTPUT 1
-#endif
+typedef void(*t_callback)(void);
 
 typedef struct Button{
 	int pin;
 	int pullup;
-	void (*callback)();
+	t_callback callback;
 } button;
 
 typedef struct Timer{
 	int fr;
 	int time;
-	void (*callback)();
+	t_callback callback;
 } timer;
+//static:
+    timer timers[NUMTIMER];
+    int timer_num = 0;
+    int button_num = 0;
+    button buttons[MAX_PIN];
+    int start;
 
-static    timer timers[NUMTIMER];
-static    timer_num = 0;
-static    button_num = 0;
-static    button buttons[MAX_PIN];
-static    start;
 
-void button_listen (int pin, int pullup,void* callback) {
-   pinMode(pin,OUTPUT);
+void button_listen (int pin, int pullup,t_callback callback) {
+   pinMode(pin,1);
    if(pullup) digitalWrite(pin,1);
 // “pin” passado deve gerar notificações
    buttons[button_num].pin = pin;
@@ -37,7 +36,7 @@ void button_listen (int pin, int pullup,void* callback) {
    button_num++;
 }
 
-void timer_set (int ms,void* callback) {
+void timer_set (int ms,t_callback callback) {
 timers[timer_num].fr = ms;
 timers[timer_num].callback = callback;
 timers[timer_num].time = 0;
@@ -50,7 +49,7 @@ timer_num++;
 /* Programa principal: */
 void setup () {
     start = millis();
-    init();                 // inicialização do usuário
+    m_init();                 // inicialização do usuário
 }
 
 void loop () {
@@ -61,13 +60,13 @@ void loop () {
 	//if((buttons[i].pullup && !val)||(!buttons[i].pullup && val))
 	if(buttons[i].pullup != val)
 	{
-		buttons[i].callback();
+		(*(buttons[i].callback))();
 	}
     }
     for(i=0;i<timer_num;i++){
 	if(timers[i].time >= timers[i].fr){
 		timers[i].time = 0;
-		timers[i].callback();
+		(*(timers[i].callback))();
 	}
     }
     int dt = millis() - start;
@@ -76,3 +75,4 @@ void loop () {
     }
     start += dt;
 }
+
