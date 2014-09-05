@@ -1,3 +1,4 @@
+#include "eventos.c"
 #define LED_PIN 13
 #define BUT_UP_PIN  2
 #define BUT_DOWN_PIN 8
@@ -9,7 +10,6 @@
 #define button1_fr 200
 #define button2_fr button1_fr
 #define buttonboth_fr 100
-#include "eventos.c"
 int fr;
 int led;
 int enabled = 1;
@@ -73,8 +73,8 @@ void F_button(){
 if(enabled) 
     timer_set(button_fr,&F_button);
 }
-void init () {
-    pinMode(LED_PIN, OUTPUT);
+void m_init () {
+    pinMode(LED_PIN, 1);
     button_listen(BUT_UP_PIN,1,button_up);
     button_listen(BUT_DOWN_PIN,1,button_down);
     led = 0;
