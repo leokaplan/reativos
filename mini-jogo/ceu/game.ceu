@@ -1,0 +1,41 @@
+input int SDL_DT;
+input _SDL_KeyboardEvent*    SDL_KEYDOWN;
+
+#include "player.ceu"
+#include "enemy.ceu"
+
+class Game with
+    event void ok;
+do
+    var int score = 0;
+    var int level = 0;
+    var Player player;
+    pool Enemy[20] enemies;
+    par do
+        every (_rand()%100+200)ms do
+            spawn Enemy in enemies with
+                this.level = level;
+            end;
+        end
+    with
+        var int ms;
+        every ms in SDL_DT do
+            loop (Enemy *)e in enemies do
+               //if SDLRect_vs_SDLRect(e:col_box,player.col_box)then
+                if not (((e:col_box.y+e:col_box.h) < player.col_box.y) or ((player.col_box.y+player.col_box.h) < e:col_box.y) or ((e:col_box.x+e:col_box.w) < player.col_box.x) or ((player.col_box.x+player.col_box.w) < e:col_box.x)) then
+                  _printf("~~#~~ SCORE  %d ~~#~~\n",score);
+                  emit ok;
+                end
+            end        
+        end
+    with
+        every 50ms do
+            score = score + 1;
+        end
+    with
+        every 1s do
+            level = level + 1;
+        end
+    end
+end
+	
