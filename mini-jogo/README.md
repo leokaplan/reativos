@@ -24,13 +24,13 @@ ceu-sdl/reativos/mini-jogo/
 
 ```
 cd ceu-sdl/
-make CEUFILE="ceu-sdl/reativos/mini-jogo/main.ceu"
+make CEUFILE="ceu-sdl/reativos/mini-jogo/ceu/main.ceu"
 ```
 
 * Para rodar:
 
 ```
-cd lessmilk/ceu/1/ceu
+cd reativos/mini-jogo/ceu
 ./main.exe
 ```
 
