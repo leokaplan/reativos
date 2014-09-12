@@ -15,7 +15,10 @@ Instruções
 
 * Árvore de arquivos:
 
-```ceu-sdl/reativos/mini-jogo/```
+```
+ceu-sdl/reativos/mini-jogo/
+```
+
 
 * Para compilar:
 
