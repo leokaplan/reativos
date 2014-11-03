@@ -24,7 +24,7 @@ var _SDL_Renderer[] ren;
         _SDL_DestroyRenderer(ren);
     end
 
-native _lay1, _lay2,_name1;
+native _lay1, _lay2;
 native do
     int lay1[16] = {
          0, -1, -1, -1,
@@ -35,7 +35,6 @@ native do
     int lay2[3] = {
         0, 1, 2
     };
-    char name1[3] = "g1"; 
 end
 
 LUI_load("Lui-grid.lua");
@@ -44,7 +43,7 @@ par/or do
 with
     var LUIGrid g1 with
         this.ren = ren;
-        this.varname := _name1; 
+        this.varname = "g1"; 
         this.lay := _lay1;
         this.lay_lins = 4;
         this.lay_cols = 4;
